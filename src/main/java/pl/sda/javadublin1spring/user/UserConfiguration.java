@@ -11,11 +11,5 @@ import java.util.Arrays;
 @Profile("prod")
 public class UserConfiguration {
 
-    @Bean
-    public UserRepository preInitializedInMemoryUserRepository() {
-        return new InMemoryUserRepository(Arrays.asList(
-                new User(1L, "Jan", "Kowalski", Gender.MALE)
-        ));
-    }
 
 }

@@ -9,11 +9,9 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
     private JpaUserRepository jpaUserRepository;
 
-    public UserService(UserRepository userRepository, JpaUserRepository jpaUserRepository) {
-        this.userRepository = userRepository;
+    public UserService(JpaUserRepository jpaUserRepository) {
         this.jpaUserRepository = jpaUserRepository;
     }
 
@@ -29,7 +27,7 @@ public class UserService {
     public List<User> findByGender(String gender) {
         try {
             Gender enumGender = Gender.valueOf(gender);
-            return userRepository.findByGender(enumGender);
+            return jpaUserRepository.findByGender(enumGender);
         } catch (IllegalArgumentException e) {
             throw new InvalidParameterException("gender");
         }
