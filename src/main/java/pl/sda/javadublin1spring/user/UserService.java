@@ -4,23 +4,26 @@ import org.springframework.stereotype.Service;
 import pl.sda.javadublin1spring.user.exceptions.InvalidParameterException;
 import pl.sda.javadublin1spring.user.exceptions.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private JpaUserRepository jpaUserRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JpaUserRepository jpaUserRepository) {
         this.userRepository = userRepository;
+        this.jpaUserRepository = jpaUserRepository;
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id)
+        return jpaUserRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Iterable<User> findAll() {
+        return jpaUserRepository.findAll();
     }
 
     public List<User> findByGender(String gender) {
@@ -33,6 +36,6 @@ public class UserService {
     }
 
     public void saveUser(User user) {
-        userRepository.save(user);
+        jpaUserRepository.save(user);
     }
 }
